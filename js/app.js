@@ -2,14 +2,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.querySelector('.md\\:hidden button');
 
-    // Create mobile menu dynamically if it doesn't exist (or just use this logic)
-    // The previous code created it dynamically, let's keep that pattern or ensure it works with existing HTML
-    // Based on previous file content, it creates it.
-
-    // However, to avoid duplicating logic if the file is re-written, let's stick to the previous content style
-    // BUT, the previous content in Step 150 showing it creating the menu. 
-    // I will rewrite the file to include both the Mobile Menu logic AND the QRIS logic cleanly.
-
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'fixed inset-0 z-40 bg-background-light dark:bg-background-dark transform transition-transform duration-300 translate-x-full md:hidden flex flex-col items-center justify-center space-y-8';
     mobileMenu.innerHTML = `
@@ -20,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="#menu" class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">Menu</a>
         <a href="#locations" class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">Lokasi</a>
         <a href="#about" class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">Tentang Kami</a>
+        <button class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary qris-mobile-btn">QRIS</button>
     `;
     document.body.appendChild(mobileMenu);
 
@@ -39,6 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', toggleMenu);
     });
+
+    // Handle Mobile QRIS Button
+    const qrisMobileBtn = mobileMenu.querySelector('.qris-mobile-btn');
+    if (qrisMobileBtn) {
+        qrisMobileBtn.addEventListener('click', () => {
+            toggleMenu(); // Close the menu
+            openQrisModal(); // Open the modal
+        });
+    }
 });
 
 // QRIS Modal Functions (Global Scope)
