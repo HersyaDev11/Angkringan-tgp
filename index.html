@@ -18,6 +18,15 @@
         rel="stylesheet" />
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Theme Validation Script -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 antialiased font-display">
@@ -50,6 +59,12 @@
                     <button onclick="openQrisModal()"
                         class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary font-medium transition-colors">
                         QRIS
+                    </button>
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleTheme()"
+                        class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">
+                        <span
+                            class="material-icons theme-icon w-6 h-6 flex items-center justify-center">dark_mode</span>
                     </button>
                 </div>
                 <!-- CTA Button -->

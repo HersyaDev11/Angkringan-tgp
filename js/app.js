@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'fixed inset-0 z-40 bg-background-light dark:bg-background-dark transform transition-transform duration-300 translate-x-full md:hidden flex flex-col items-center justify-center space-y-8';
+
+    // Check current theme for initial icon
+    const isDark = document.documentElement.classList.contains('dark');
+    const themeIcon = isDark ? 'light_mode' : 'dark_mode';
+    const themeText = isDark ? 'Mode Terang' : 'Mode Gelap';
+
     mobileMenu.innerHTML = `
         <button class="absolute top-6 right-6 text-gray-600 dark:text-gray-300 hover:text-primary">
             <span class="material-icons text-3xl">close</span>
@@ -13,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <a href="#locations" class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">Lokasi</a>
         <a href="#about" class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">Tentang Kami</a>
         <button class="text-2xl font-bold text-gray-900 dark:text-white hover:text-primary qris-mobile-btn">QRIS</button>
+        <button onclick="toggleTheme()" class="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white hover:text-primary">
+            <span class="material-icons theme-icon-mobile">${themeIcon}</span>
+            <span class="theme-text-mobile">${themeText}</span>
+        </button>
     `;
     document.body.appendChild(mobileMenu);
 
@@ -44,7 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Cart
     updateCartUI();
+
+    // Initialize Theme Icons
+    updateThemeIcons();
 });
+
+// Theme Toggle Function (Global Scope)
+function toggleTheme() {
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+    } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+    }
+    updateThemeIcons();
+}
+
+function updateThemeIcons() {
+    const isDark = document.documentElement.classList.contains('dark');
+
+    // Update Desktop Icon
+    const desktopIcon = document.querySelector('.theme-icon');
+    if (desktopIcon) {
+        desktopIcon.innerText = isDark ? 'light_mode' : 'dark_mode';
+    }
+
+    // Update Mobile Icon & Text
+    const mobileIcon = document.querySelector('.theme-icon-mobile');
+    const mobileText = document.querySelector('.theme-text-mobile');
+
+    if (mobileIcon) mobileIcon.innerText = isDark ? 'light_mode' : 'dark_mode';
+    if (mobileText) mobileText.innerText = isDark ? 'Mode Terang' : 'Mode Gelap';
+}
 
 // QRIS Modal Functions (Global Scope)
 function openQrisModal() {
